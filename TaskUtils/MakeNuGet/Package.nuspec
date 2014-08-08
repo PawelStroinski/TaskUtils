@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>TaskUtils</id>
+    <version>0.1</version>
+    <authors>Pawel Stroinski</authors>
+    <owners>Pawel Stroinski</owners>
+    <licenseUrl>https://github.com/PawelStroinski/TaskUtils/blob/master/COPYING.md</licenseUrl>
+    <projectUrl>https://github.com/PawelStroinski/TaskUtils</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Slimmed down wrapper around System.Threading.Tasks.Task class with a wrapper implementation for use in running application and a synchronous implementation for use in unit tests so testing simple multithreading code is a piece of cake. See example @ https://github.com/PawelStroinski/TaskUtils</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>Task TAP Unit Test TDD StartNew WaitAll</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+</package>
