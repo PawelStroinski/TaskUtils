@@ -14,5 +14,12 @@ namespace TaskUtils
         {
             Task.WaitAll(tasks);
         }
+
+        public void WaitAll(Task[] tasks, TimeSpan timeout)
+        {
+            var onTime = Task.WaitAll(tasks, timeout);
+            if (!onTime)
+                throw new TimeoutException();
+        }
     }
 }

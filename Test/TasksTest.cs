@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace TaskUtils
@@ -8,6 +9,13 @@ namespace TaskUtils
     {
         [Test]
         public void TestTasks()
+        {
+            TestTasks((sut, task) => sut.WaitAll(task));
+            TestTasks((sut, task) => sut.WaitAll(new Task[] { task },
+                TimeSpan.FromSeconds(100)));
+        }
+
+        void TestTasks(Action<ITasks, Task> waitAll)
         {
             ITasks sut = new Tasks();
             var done = new ManualResetEvent(false);
@@ -22,8 +30,16 @@ namespace TaskUtils
             });
             Assert.IsTrue(started.WaitOne(TimeSpan.FromSeconds(0.5)));
             Assert.IsFalse(done.WaitOne(TimeSpan.Zero));
-            sut.WaitAll(task);
+            waitAll(sut, task);
             Assert.IsTrue(done.WaitOne(TimeSpan.Zero));
+        }
+
+        [Test, ExpectedException(typeof(TimeoutException))]
+        public void TimeoutOccured()
+        {
+            ITasks sut = new Tasks();
+            var task = sut.StartNew(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
+            sut.WaitAll(new Task[] { task }, TimeSpan.FromSeconds(0.1));
         }
     }
 }

@@ -7,5 +7,6 @@ namespace TaskUtils
     {
         Task StartNew(Action action);
         void WaitAll(params Task[] tasks);
+        void WaitAll(Task[] tasks, TimeSpan timeout);
     }
 }

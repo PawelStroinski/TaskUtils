@@ -27,5 +27,10 @@ namespace TaskUtils
                 }
             }
         }
+
+        public void WaitAll(Task[] tasks, TimeSpan timeout)
+        {
+            WaitAll(tasks);
+        }
     }
 }

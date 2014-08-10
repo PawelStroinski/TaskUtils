@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace TaskUtils
@@ -7,6 +9,13 @@ namespace TaskUtils
     {
         [Test]
         public void TestSyncTasks()
+        {
+            TestSyncTasks((sut, task) => sut.WaitAll(task));
+            TestSyncTasks((sut, task) => sut.WaitAll(new Task[] { task },
+                TimeSpan.FromSeconds(100)));
+        }
+
+        void TestSyncTasks(Action<ITasks, Task> waitAll)
         {
             ITasks sut = new SyncTasks();
             var done = false;
@@ -17,7 +26,7 @@ namespace TaskUtils
                 done = true;
             });
             Assert.IsFalse(done);
-            sut.WaitAll(task);
+            waitAll(sut, task);
             Assert.IsTrue(done);
         }
 
@@ -31,6 +40,14 @@ namespace TaskUtils
             sut.WaitAll(task);
             sut.WaitAll(task, task);
             Assert.AreEqual(1, counter);
+        }
+
+        [Test]
+        public void TimeoutNeverOccurs()
+        {
+            ITasks sut = new SyncTasks();
+            var task = sut.StartNew(() => Thread.Sleep(TimeSpan.FromSeconds(1)));
+            sut.WaitAll(new Task[] { task }, TimeSpan.FromSeconds(0.1));
         }
     }
 }
