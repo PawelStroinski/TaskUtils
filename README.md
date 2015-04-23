@@ -1,5 +1,7 @@
 TaskUtils
 =========
+[![Build Status](https://travis-ci.org/PawelStroinski/TaskUtils.svg?branch=master)](https://travis-ci.org/PawelStroinski/TaskUtils)
+
 Slimmed down wrapper around [System.Threading.Tasks.Task](http://msdn.microsoft.com/en-us/library/system.threading.tasks.task(v=vs.110).aspx) class with a wrapper implementation for use in running application and a synchronous implementation for use in unit tests so testing simple multithreading code is a piece of cake.
 
 Example
